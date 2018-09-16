@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :v1 do
+    get 'holidays' => 'holiday#index'
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
