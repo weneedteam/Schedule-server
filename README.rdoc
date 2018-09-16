@@ -5,24 +5,24 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version (2.3.1)
 
-* System dependencies
+* Rails version (4.2.0)
 
-* Configuration
+* MySQL
 
-* Database creation
+* Rails + Thin + Nginx
+/home/ubuntu/schedule/restart_server.sh -> restart server command
 
-* Database initialization
+* DataBase Setting
+* <tt>export SCHEDULE_SERVER_DATABASE_USER=root</tt>
+* <tt>export SCHEDULE_SERVER_DATABASE_PASSWORD=qwer1234</tt>
+* <tt>export SCHEDULE_SERVER_DATABASE_HOST=localhost</tt>
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
+* Setting Server
+1. bundle install
+2. rake db:create
+3. rake db:migrate
 
 Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
