@@ -18,6 +18,7 @@ Things you may want to cover:
 * <tt>export SCHEDULE_SERVER_DATABASE_USER=root</tt>
 * <tt>export SCHEDULE_SERVER_DATABASE_PASSWORD=qwer1234</tt>
 * <tt>export SCHEDULE_SERVER_DATABASE_HOST=localhost</tt>
+* <tt>export SCHEDULE_SERVER_SKT_API_KEY=xxxx-xxxx-xxxxxx-xxxxxx-xxx</tt>
 
 * Setting Server
 1. bundle install
