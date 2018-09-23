@@ -43,7 +43,7 @@ class V1::HolidayController < ApplicationController
                 end
             end
 
-            @holidays = Holiday.where(year: year - 1..year + 1)
+            @holidays = Holiday.where(year: year - 1..year + 1).order(:year)
         else
             @holidays = nil
         end
