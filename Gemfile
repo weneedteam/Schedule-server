@@ -29,6 +29,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Unicorn as the app server
 # gem 'unicorn'
 
+# Use devise as the User
+gem 'devise'
+
 # Use Thin as the app server
 gem 'thin'
 
