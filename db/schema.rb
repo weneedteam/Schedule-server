@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180923103305) do
+ActiveRecord::Schema.define(version: 20180925031418) do
 
   create_table "holidays", force: :cascade do |t|
     t.string   "name",       limit: 255
@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(version: 20180923103305) do
 
   add_index "users", ["auth_token"], name: "index_users_on_auth_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
