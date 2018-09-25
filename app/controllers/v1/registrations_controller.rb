@@ -4,7 +4,12 @@ class V1::RegistrationsController < Devise::RegistrationsController
     def respond_with(resource, opts = {})
         if request.headers['Accept'] != 'application/json'
         # if request.method != 'POST'
-        render json: { errors: 'Not supports.' }
+            render json: {
+                error: {
+                    code: 406,
+                    message: "Not Acceptable, not supports."
+                }
+            }, status: 406
         else 
             if resource.id.nil?
                 render json: { errors: resource.errors.full_messages }
