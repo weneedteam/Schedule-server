@@ -4,9 +4,9 @@ class V1::UserController < ApplicationController
   def index
     current_user = checkUser(request)
     unless current_user.nil?
-      if !params['user']['email'].empty?
+      if !params['user']['email'].nil?
         @user = User.where(email: params['user']['email']).first
-      elsif !params['user']['name'].empty?
+      elsif !params['user']['name'].nil?
         @user = User.where(name: params['user']['name']).first
       else
         @user = nil
