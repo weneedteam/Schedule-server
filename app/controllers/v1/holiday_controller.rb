@@ -47,7 +47,7 @@ class V1::HolidayController < ApplicationController
         else
             @holidays = nil
         end
-        render json: @holidays
+        # render json: @holidays
     end
 
     def search (year)

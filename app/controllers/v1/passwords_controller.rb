@@ -3,10 +3,7 @@ class V1::PasswordsController < Devise::PasswordsController
         if request.headers['Accept'] != 'application/json'
         # if request.method != 'POST'
             render json: {
-                error: {
-                    code: 406,
-                    message: "Not Acceptable, not supports."
-                }
+                error: { code: 406, message: "Not Acceptable, not supports." }
             }, status: 406
         end
     end
