@@ -2,8 +2,9 @@ Rails.application.routes.draw do
   root to: "home#index"
   
   namespace :v1 do
-    get 'holidays' => 'holiday#index'
-    post 'user'     => 'user#index'
+    get 'holidays'   => 'holiday#index'
+    post 'user'      => 'user#index'
+    post 'fcm_token' => 'user#fcm_token'
   end
 
   devise_for :users, :controllers => { 
