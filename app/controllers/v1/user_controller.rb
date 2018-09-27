@@ -13,8 +13,8 @@ class V1::UserController < ApplicationController
       end
       if @user.nil?
         render json: {
-          message: { code: 400, message: "Not found user." }
-        }, status: 400
+          message: { code: 404, message: "Not found user." }
+        }, status: 404
       end
     else
       render json: {
