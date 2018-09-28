@@ -11,7 +11,7 @@ class V1::FriendController < ApplicationController
       end
     else
       render json: {
-        result: { code: 401, message: "Unauthorized auth_token." }
+        code: 401, message: "Unauthorized auth_token."
       }, status: 401
     end
   end
@@ -36,12 +36,12 @@ class V1::FriendController < ApplicationController
         end
       else
         render json: {
-          result: { code: 400, message: "No have users id" }
+          code: 400, message: "No have users id"
         }, status: 400
       end
     else
       render json: {
-        result: { code: 401, message: "Unauthorized auth_token." }
+        code: 401, message: "Unauthorized auth_token."
       }, status: 401
     end
   end

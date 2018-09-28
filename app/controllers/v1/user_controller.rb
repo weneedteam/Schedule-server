@@ -13,12 +13,12 @@ class V1::UserController < ApplicationController
       end
       if @user.nil?
         render json: {
-          result: { code: 404, message: "Not found user." }
+          code: 404, message: "Not found user."
         }, status: 404
       end
     else
       render json: {
-        result: { code: 401, message: "Unauthorized auth_token." }
+        code: 401, message: "Unauthorized auth_token."
       }, status: 401
     end
   end
@@ -31,16 +31,16 @@ class V1::UserController < ApplicationController
         current_user.fcm_token = fcm_token
         current_user.save
         render json: {
-          result: { code: 200, message: "Complete!" }
+          code: 200, message: "Complete!"
         }, status: 200
       else
         render json: {
-          result: { code: 400, message: "fcm token is null." }
+          code: 400, message: "fcm token is null."
         }, status: 400
       end
     else
       render json: {
-        result: { code: 401, message: "Unauthorized auth_token." }
+        code: 401, message: "Unauthorized auth_token."
       }, status: 401
     end
   end
