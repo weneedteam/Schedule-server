@@ -11,7 +11,7 @@ class V1::RegistrationsController < Devise::RegistrationsController
             if resource.id.nil?
                 render json: { 
                     message: { code: 400, message: resource.errors.full_messages }
-                }
+                }, status: 400
             else
                 render json: resource
             end
