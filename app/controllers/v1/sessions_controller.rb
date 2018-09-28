@@ -8,12 +8,12 @@ class V1::SessionsController < Devise::SessionsController
                 render json: @user
             else
                 render json: {
-                    message: { code: 400, message: "The password is incorrect." }
+                    result: { code: 400, message: "The password is incorrect." }
                 }, status: 400
             end
         else
             render json: {
-                message: { code: 400, message: "The email is incorrect." }
+                result: { code: 400, message: "The email is incorrect." }
             }, status: 400
         end
     end
@@ -22,7 +22,7 @@ class V1::SessionsController < Devise::SessionsController
         if request.headers['Accept'] != 'application/json'
         # if request.method != 'POST'
             render json: {
-                message: { code: 406, message: "Not Acceptable, not supports." }
+                result: { code: 406, message: "Not Acceptable, not supports." }
             }, status: 406
         end
     end
