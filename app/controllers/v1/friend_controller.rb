@@ -1,5 +1,6 @@
 class V1::FriendController < ApplicationController
   include UserHelper
+  include PushHelper
 
   def index
     current_user = checkUser(request)
@@ -11,7 +12,7 @@ class V1::FriendController < ApplicationController
       end
     else
       render json: {
-        code: 401, message: [ "Unauthorized auth_token." ]
+          code: 401, message: ["Unauthorized auth_token."]
       }, status: 401
     end
   end
@@ -31,17 +32,20 @@ class V1::FriendController < ApplicationController
             friend.assent = false
             friend.save
 
-            @friends.push(User.find(user_id))
+            user = User.find(user_id)
+            @friends.push(user)
+
+            push(user.fcm_token, friend.id, current_user)
           end
         end
       else
         render json: {
-          code: 400, message: [ "No have users id" ]
+            code: 400, message: ["No have users id"]
         }, status: 400
       end
     else
       render json: {
-        code: 401, message: [ "Unauthorized auth_token." ]
+          code: 401, message: ["Unauthorized auth_token."]
       }, status: 401
     end
   end
