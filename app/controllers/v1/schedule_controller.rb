@@ -55,6 +55,32 @@ class V1::ScheduleController < ApplicationController
     end
   end
 
+  def update
+    current_user = checkUser(request)
+    if current_user.nil?
+      render json: {
+        code: 401, message: ['Unauthorized auth_token.']
+      }, status: 401
+    else
+      @schedule = Schedule.find(params[:id])
+      if !@schedule.nil?
+        if @schedule.user_id == current_user.id
+          @schedule.update(schedule_params)
+          @schedule.save
+          render 'v1/schedule/show'
+        else
+          render json: {
+            code: 403, message: ['Do not update.']
+          }, status: 403
+        end
+      else
+        render json: {
+          code: 404, message: ['Not found schedule.']
+        }, status: 404
+      end
+    end
+  end
+
   private
 
   def schedule_params

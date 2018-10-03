@@ -10,9 +10,10 @@ Rails.application.routes.draw do
     get   'friends'      => 'friend#index'
     post  'friends/new'  => 'friend#new'
 
-    get   'schedule'     => 'schedule#index'
-    post  'schedule/new' => 'schedule#new'
-    get   'schedule/:id' => 'schedule#show'
+    get   'schedule'          => 'schedule#index'
+    post  'schedule/new'      => 'schedule#new'
+    get   'schedule/:id'      => 'schedule#show'
+    post  'schedule/edit/:id' => 'schedule#update'
   end
 
   devise_for :users, :controllers => { 
