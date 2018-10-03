@@ -51,7 +51,12 @@ class V1::ScheduleController < ApplicationController
         code: 406, message: ['Not Acceptable, not supports.']
       }, status: 406
     else
-      @schedule = Schedule.find(params[:id])
+      @schedule = Schedule.where(id: params[:id])
+      if @schedule.blank?
+        render json: {
+          code: 404, message: ['Not found schedule.']
+        }, status: 404
+      end
     end
   end
 
@@ -62,8 +67,8 @@ class V1::ScheduleController < ApplicationController
         code: 401, message: ['Unauthorized auth_token.']
       }, status: 401
     else
-      @schedule = Schedule.find(params[:id])
-      if !@schedule.nil?
+      @schedule = Schedule.where(id: params[:id])
+      if !@schedule.blank?
         if @schedule.user_id == current_user.id
           @schedule.update(schedule_params)
           @schedule.save
