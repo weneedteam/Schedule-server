@@ -28,9 +28,9 @@ class V1::ScheduleController < ApplicationController
       @schedule_users = Array.new
       user_ids.each do |user_id|
         schedule_user = ScheduleUser.new
-        schedule_user.schedule_id=@schedule.id
-        schedule_user.user_id=user_id
-        schedule_user.arrive=false
+        schedule_user.schedule_id = @schedule.id
+        schedule_user.user_id = user_id
+        schedule_user.arrive = (user_id == current_user.id)
         schedule_user.save
 
         if !check_user = User.where(id: user_id).blank?
@@ -40,8 +40,18 @@ class V1::ScheduleController < ApplicationController
 
     else
       render json: {
-          code: 401, message: ["Unauthorized auth_token."]
+        code: 401, message: ['Unauthorized auth_token.']
       }, status: 401
+    end
+  end
+
+  def show
+    if request.headers['Accept'] != 'application/json'
+      render json: {
+        code: 406, message: ['Not Acceptable, not supports.']
+      }, status: 406
+    else
+      @schedule = Schedule.find(params[:id])
     end
   end
 

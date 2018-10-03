@@ -9,6 +9,7 @@ json.array!(@schedules) do |schedule|
       json.id schedule_user.user.id
       json.name schedule_user.user.name
       json.email schedule_user.user.email
+      json.arrive schedule_user.arrive
     end
   end
 end
