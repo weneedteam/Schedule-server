@@ -51,7 +51,7 @@ class V1::ScheduleController < ApplicationController
         code: 406, message: ['Not Acceptable, not supports.']
       }, status: 406
     else
-      @schedule = Schedule.where(id: params[:id])
+      @schedule = Schedule.where(id: params[:id]).first
       if @schedule.blank?
         render json: {
           code: 404, message: ['Not found schedule.']
@@ -67,7 +67,7 @@ class V1::ScheduleController < ApplicationController
         code: 401, message: ['Unauthorized auth_token.']
       }, status: 401
     else
-      @schedule = Schedule.where(id: params[:id])
+      @schedule = Schedule.where(id: params[:id]).first
       if !@schedule.blank?
         if @schedule.user_id == current_user.id
           @schedule.update(schedule_params)
@@ -76,6 +76,34 @@ class V1::ScheduleController < ApplicationController
         else
           render json: {
             code: 403, message: ['Do not update.']
+          }, status: 403
+        end
+      else
+        render json: {
+          code: 404, message: ['Not found schedule.']
+        }, status: 404
+      end
+    end
+  end
+
+  def delete
+    current_user = checkUser(request)
+    if current_user.nil?
+      render json: {
+        code: 401, message: ['Unauthorized auth_token.']
+      }, status: 401
+    else
+      @schedule = Schedule.where(id: params[:id]).first
+      if !@schedule.blank?
+        if @schedule.user_id == current_user.id
+          @schedule.schedule_user.destroy_all
+          @schedule.destroy
+          render json: {
+            code: 200, message: ['Delete Complete!']
+          }, status: 200
+        else
+          render json: {
+            code: 403, message: ['Do not delete.']
           }, status: 403
         end
       else

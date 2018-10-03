@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     post  'schedule/new'      => 'schedule#new'
     get   'schedule/:id'      => 'schedule#show'
     post  'schedule/edit/:id' => 'schedule#update'
+    delete 'schedule/:id'     => 'schedule#delete'
   end
 
   devise_for :users, :controllers => { 
