@@ -6,8 +6,14 @@ class V1::UserController < ApplicationController
     unless current_user.nil?
       if !params['user']['email'].nil?
         @user = User.where(email: params['user']['email']).first
+        if !@user.nil?
+          @firend = Friend.check_friend(current_user.id, @user.id).first
+        end
       elsif !params['user']['name'].nil?
         @user = User.where(name: params['user']['name']).first
+        if !@user.nil?
+          @firend = Friend.check_friend(current_user.id, @user.id).first
+        end
       else
         @user = nil
       end
