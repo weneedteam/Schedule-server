@@ -98,8 +98,8 @@ class V1::UserController < ApplicationController
     @user = User.where(reset_password_token: token).first
     if @user.blank?
       render json: {
-        code: 404, message: ['Not found user.']
-      }, status: 404
+        code: 401, message: ['Unauthorized password_token.']
+      }, status: 401
     else
       @user.update(user_params)
       @user.reset_password_token = nil
