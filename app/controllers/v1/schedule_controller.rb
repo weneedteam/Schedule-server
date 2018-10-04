@@ -114,6 +114,32 @@ class V1::ScheduleController < ApplicationController
     end
   end
 
+  def arrive
+    current_user = checkUser(request)
+    if current_user.nil?
+      render json: {
+        code: 401, message: ['Unauthorized auth_token.']
+      }, status: 401
+    else
+      @schedule = Schedule.where(id: params[:id]).first
+      if !@schedule.blank?
+        @schedule.schedule_users.each do |schedule_user|
+          if schedule_user.user_id == current_user.id
+            schedule_user.arrived_at = params[:arrived_at]
+            schedule_user.save
+          end
+        end
+        render json: {
+          code: 200, message: ['Complete!']
+        }, status: 200
+      else
+        render json: {
+          code: 404, message: ['Not found schedule.']
+        }, status: 404
+      end
+    end
+  end
+
   private
 
   def schedule_params

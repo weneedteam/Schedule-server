@@ -1,6 +1,6 @@
 class Schedule < ActiveRecord::Base
   belongs_to :user
-  has_many :schedule_user
+  has_many :schedule_users
 
   validates :title, :start_time, :latitude, :longitude, presence: true
 
