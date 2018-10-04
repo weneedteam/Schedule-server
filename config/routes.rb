@@ -2,10 +2,13 @@ Rails.application.routes.draw do
   root to: "home#index"
   
   namespace :v1 do
-    get   'holidays'     => 'holiday#index'
+    get   'holidays'          => 'holiday#index'
 
-    post  'user'         => 'user#index'
-    post  'fcm_token'    => 'user#fcm_token'
+    post  'user'              => 'user#index'
+    post  'user/email'        => 'user#email'
+    post  'user/password'     => 'user#password'
+    post  'user/password/new' => 'user#new_password'
+    post  'fcm_token'         => 'user#fcm_token'
 
     get   'friends'      => 'friend#index'
     post  'friends/new'  => 'friend#new'

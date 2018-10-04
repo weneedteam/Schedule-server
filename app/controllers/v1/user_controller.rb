@@ -51,4 +51,68 @@ class V1::UserController < ApplicationController
     end
   end
 
+  def email
+    name = params[:name]
+    phone = params[:phone]
+    birth = params[:birth] # DateTime.strptime(params[:birth].to_s, '%s')
+
+    if name.blank? || phone.blank? || birth.blank?
+      render json: {
+        code: 404, message: ['Not found user.']
+      }, status: 404
+    else
+      @user = User.where(name: name, phone: phone, birth: birth).first
+      if @user.blank?
+        render json: {
+          code: 404, message: ['Not found user.']
+        }, status: 404
+      end
+    end
+  end
+
+  def password
+    email = params[:email]
+    name = params[:name]
+    phone = params[:phone]
+    birth = params[:birth] # DateTime.strptime(params[:birth].to_s, '%s')
+
+    if email.blank? || name.blank? || phone.blank? || birth.blank?
+      render json: {
+        code: 404, message: ['Not found user.']
+      }, status: 404
+    else
+      @user = User.where(email: email, name: name, phone: phone, birth: birth).first
+      if @user.blank?
+        render json: {
+          code: 404, message: ['Not found user.']
+        }, status: 404
+      else
+        @user.reset_password_token = Devise.friendly_token
+        @user.save
+      end
+    end
+  end
+
+  def new_password
+    token = request.headers['Authorization']
+    @user = User.where(reset_password_token: token).first
+    if @user.blank?
+      render json: {
+        code: 404, message: ['Not found user.']
+      }, status: 404
+    else
+      @user.update(user_params)
+      @user.reset_password_token = nil
+      @user.save
+
+      render json: {
+        code: 200, message: ['Complete!']
+      }, status: 200
+    end
+  end
+
+  def user_params
+    params.require(:user).permit(:password, :password_confirmation)
+  end
+
 end
