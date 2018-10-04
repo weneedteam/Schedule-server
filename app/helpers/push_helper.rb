@@ -3,26 +3,22 @@ require 'json'
 require 'net/http'
 
 module PushHelper
-  URL_BASE = 'https://fcm.googleapis.com/fcm/send'.freeze
 
-  def push(fcm_token, friend_id, user)
+  URL_BASE = 'https://fcm.googleapis.com/fcm/send'.freeze
+  CONTENT_TYPE = 'application/json'.freeze
+  AUTHORIZATION = 'key=' + ENV['SCHEDULE_SERVER_FCM_KEY'].freeze
+
+  def push(fcm_token, data)
     json_data = {
       to: fcm_token,
-      data: {
-        user: {
-          name: user.name,
-          email: user.email,
-          birth: user.birth.to_i,
-          friend_id: friend_id
-        }
-      }
+      data: data
     }
 
     url = URI.parse(URL_BASE)
     req = Net::HTTP::Post.new(url.path)
 
-    req['Content-Type'] = 'application/json'
-    req['Authorization'] = 'key=' + ENV['SCHEDULE_SERVER_FCM_KEY']
+    req['Content-Type'] = CONTENT_TYPE
+    req['Authorization'] = AUTHORIZATION
     req.body = json_data.to_json
 
     con = Net::HTTP.new(url.host, url.port)

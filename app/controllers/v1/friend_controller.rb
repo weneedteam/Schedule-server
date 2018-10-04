@@ -35,7 +35,17 @@ class V1::FriendController < ApplicationController
             user = User.find(user_id)
             @friends.push(user)
 
-            push(user.fcm_token, friend.id, current_user)
+            data = {
+              type: 'friend',
+              user: {
+                name: current_user.name,
+                email: current_user.email,
+                birth: current_user.birth.to_i,
+                friend_id: friend.id
+              }
+            }
+            push(user.fcm_token, data)
+
           end
         end
       else

@@ -33,8 +33,25 @@ class V1::ScheduleController < ApplicationController
         schedule_user.arrive = (user_id == current_user.id)
         schedule_user.save
 
-        if !check_user = User.where(id: user_id).blank?
-          @schedule_users.push(User.where(id: user_id).first)
+        check_user = User.where(id: user_id)
+        if !check_user.blank?
+          @schedule_users.push(check_user.first)
+          data = {
+              type: 'schedule',
+              user: {
+                  name: current_user.name,
+                  email: current_user.email,
+                  birth: current_user.birth.to_i
+              },
+              schedule: {
+                  id: @schedule.id,
+                  title: @schedule.title,
+                  start_time: @schedule.start_time.strftime('%Y-%m-%d %H:%M:%S'),
+                  latitude: @schedule.latitude,
+                  longitude: @schedule.longitude
+              }
+          }
+          push(check_user.fcm_token, data)
         end
       end
 
