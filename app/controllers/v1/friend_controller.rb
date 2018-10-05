@@ -20,7 +20,7 @@ class V1::FriendController < ApplicationController
   def new
     current_user = checkUser(request)
     unless current_user.nil?
-      user_ids = params['user_ids']
+      user_ids = params[:_json]
       if !user_ids.nil?
         @friends = Array.new
         user_ids.each do |user_id|
