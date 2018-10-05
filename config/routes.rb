@@ -10,8 +10,9 @@ Rails.application.routes.draw do
     post  'user/password/new' => 'user#new_password'
     post  'fcm_token'         => 'user#fcm_token'
 
-    get   'friends'      => 'friend#index'
-    post  'friends/new'  => 'friend#new'
+    get   'friends'             => 'friend#index'
+    post  'friends/new'         => 'friend#new'
+    post  'friends/:id/consent' => 'friend#consent'
 
     get    'schedule'            => 'schedule#index'
     post   'schedule/new'        => 'schedule#new'

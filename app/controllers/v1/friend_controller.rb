@@ -59,4 +59,33 @@ class V1::FriendController < ApplicationController
       }, status: 401
     end
   end
+
+  def consent
+    current_user = checkUser(request)
+    if current_user.nil?
+      render json: {
+        code: 401, message: ['Unauthorized auth_token.']
+      }, status: 401
+    else
+      @friend = Friend.where(id: params[:id]).first
+      if @friend.blank? || @friend.response_user_id != current_user.id
+        render json: {
+          code: 404, message: ['Not Found Friend.']
+        }, status: 404
+      else
+        answer = params[:answer]
+        if answer
+          @friend.assent = true
+          @friend.assented_at = params[:answered_at]
+          @friend.save
+        else
+          @friend.destroy
+        end
+
+        render json: {
+          code: 200, message: ['Complete!']
+        }, status: 200
+      end
+    end
+  end
 end
