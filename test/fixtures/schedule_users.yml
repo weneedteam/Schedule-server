@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  schedule_id: 1
+  user_id: 1
+  arrive: false
+  arrived_at: 2018-10-01 20:46:33
+
+two:
+  schedule_id: 1
+  user_id: 1
+  arrive: false
+  arrived_at: 2018-10-01 20:46:33

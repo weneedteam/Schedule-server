@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
 
   has_many :schedules
+  has_many :schedule_user
 
   validates_presence_of :name
   validates_uniqueness_of :name

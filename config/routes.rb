@@ -2,16 +2,25 @@ Rails.application.routes.draw do
   root to: "home#index"
   
   namespace :v1 do
-    get   'holidays'    => 'holiday#index'
+    get   'holidays'          => 'holiday#index'
 
-    post  'user'        => 'user#index'
-    post  'fcm_token'   => 'user#fcm_token'
+    post  'user'              => 'user#index'
+    post  'user/email'        => 'user#email'
+    post  'user/password'     => 'user#password'
+    post  'user/password/new' => 'user#new_password'
+    post  'fcm_token'         => 'user#fcm_token'
 
-    get   'friends'     => 'friend#index'
-    post  'friends/new' => 'friend#new'
+    get   'friends'             => 'friend#index'
+    post  'friends/new'         => 'friend#new'
+    post  'friends/:id/consent' => 'friend#consent'
 
-    get   'schedule'    => 'schedule#index'
-    post  'schedule/new'=> 'schedule#new'
+    get    'schedule'             => 'schedule#index'
+    post   'schedule/new'         => 'schedule#new'
+    get    'schedule/:id'         => 'schedule#show'
+    post   'schedule/edit/:id'    => 'schedule#update'
+    delete 'schedule/:id'         => 'schedule#delete'
+    post   'schedule/:id/arrive'  => 'schedule#arrive'
+    post   'schedule/:id/consent' => 'schedule#consent'
   end
 
   devise_for :users, :controllers => { 

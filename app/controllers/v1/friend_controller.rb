@@ -20,7 +20,7 @@ class V1::FriendController < ApplicationController
   def new
     current_user = checkUser(request)
     unless current_user.nil?
-      user_ids = params['user_ids']
+      user_ids = params[:_json]
       if !user_ids.nil?
         @friends = Array.new
         user_ids.each do |user_id|
@@ -35,7 +35,17 @@ class V1::FriendController < ApplicationController
             user = User.find(user_id)
             @friends.push(user)
 
-            push(user.fcm_token, friend.id, current_user)
+            data = {
+              type: 'friend',
+              user: {
+                name: current_user.name,
+                email: current_user.email,
+                birth: current_user.birth.to_i,
+                friend_id: friend.id
+              }
+            }
+            push(user.fcm_token, data)
+
           end
         end
       else
@@ -47,6 +57,35 @@ class V1::FriendController < ApplicationController
       render json: {
           code: 401, message: ["Unauthorized auth_token."]
       }, status: 401
+    end
+  end
+
+  def consent
+    current_user = checkUser(request)
+    if current_user.nil?
+      render json: {
+        code: 401, message: ['Unauthorized auth_token.']
+      }, status: 401
+    else
+      @friend = Friend.where(id: params[:id]).first
+      if @friend.blank? || @friend.response_user_id != current_user.id
+        render json: {
+          code: 404, message: ['Not Found Friend.']
+        }, status: 404
+      else
+        answer = params[:answer]
+        if answer
+          @friend.assent = true
+          @friend.assented_at = params[:answered_at]
+          @friend.save
+        else
+          @friend.destroy
+        end
+
+        render json: {
+          code: 200, message: ['Complete!']
+        }, status: 200
+      end
     end
   end
 end
