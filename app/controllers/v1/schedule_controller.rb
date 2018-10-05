@@ -41,7 +41,8 @@ class V1::ScheduleController < ApplicationController
               user: {
                   name: current_user.name,
                   email: current_user.email,
-                  birth: current_user.birth.to_i
+                  birth: current_user.birth.to_i,
+                  schedule_id: schedule_user.id
               },
               schedule: {
                   id: @schedule.id,
@@ -174,7 +175,7 @@ class V1::ScheduleController < ApplicationController
         @schedule.save
 
         render json: {
-            code: 200, message: ['Complete!']
+          code: 200, message: ['Complete!']
         }, status: 200
       end
     end
