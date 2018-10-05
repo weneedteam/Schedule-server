@@ -14,12 +14,13 @@ Rails.application.routes.draw do
     post  'friends/new'         => 'friend#new'
     post  'friends/:id/consent' => 'friend#consent'
 
-    get    'schedule'            => 'schedule#index'
-    post   'schedule/new'        => 'schedule#new'
-    get    'schedule/:id'        => 'schedule#show'
-    post   'schedule/edit/:id'   => 'schedule#update'
-    delete 'schedule/:id'        => 'schedule#delete'
-    post   'schedule/:id/arrive' => 'schedule#arrive'
+    get    'schedule'             => 'schedule#index'
+    post   'schedule/new'         => 'schedule#new'
+    get    'schedule/:id'         => 'schedule#show'
+    post   'schedule/edit/:id'    => 'schedule#update'
+    delete 'schedule/:id'         => 'schedule#delete'
+    post   'schedule/:id/arrive'  => 'schedule#arrive'
+    post   'schedule/:id/consent' => 'schedule#consent'
   end
 
   devise_for :users, :controllers => { 
