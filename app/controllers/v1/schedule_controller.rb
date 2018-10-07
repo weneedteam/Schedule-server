@@ -1,6 +1,7 @@
 require 'date'
 class V1::ScheduleController < ApplicationController
   include UserHelper
+  include PushHelper
 
   def index
     current_user = checkUser(request)
@@ -33,9 +34,9 @@ class V1::ScheduleController < ApplicationController
         schedule_user.arrive = (user_id == current_user.id)
         schedule_user.save
 
-        check_user = User.where(id: user_id)
+        check_user = User.where(id: user_id).first
         if !check_user.blank?
-          @schedule_users.push(check_user.first)
+          @schedule_users.push(check_user)
           data = {
               type: 'schedule',
               user: {
