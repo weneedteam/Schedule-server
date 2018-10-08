@@ -1,4 +1,4 @@
-json.extract! @schedule, :id, :title
+json.extract! @schedule, :id, :title, :state
 json.start_time @schedule.start_time.strftime('%Y-%m-%d %H:%M:%S')
 json.latitude @schedule.latitude
 json.longitude @schedule.longitude
