@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     delete 'schedule/:id'         => 'schedule#delete'
     post   'schedule/:id/arrive'  => 'schedule#arrive'
     post   'schedule/:id/consent' => 'schedule#consent'
+
+    get    'events/:user_id' => 'event#index'
   end
 
   devise_for :users, :controllers => { 
