@@ -1,7 +1,7 @@
 class Friend < ActiveRecord::Base
 
   def self.get_friends(user_id)
-    where('request_user_id = ? or response_user_id = ?', user_id, user_id).where(assent: true)
+    where('request_user_id = ? or response_user_id = ?', user_id, user_id).where(assent: 2)
   end
 
   def self.check_friend(my_id, user_id)

@@ -45,10 +45,10 @@ class V1::FriendController < ApplicationController
             new_friend = Friend.new
             new_friend.request_user_id = current_user.id
             new_friend.response_user_id = user_id
-            new_friend.assent = false
+            new_friend.assent = 1
             new_friend.save
 
-            friend[:assent] = false
+            friend[:assent] = 1
 
             data = {
               type: 'friend',
