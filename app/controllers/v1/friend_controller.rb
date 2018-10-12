@@ -79,6 +79,8 @@ class V1::FriendController < ApplicationController
       }, status: 401
     else
       @friend = Friend.where(id: params[:id]).first
+      response_user = @friend.get_response_user(@friend.response_user_id)
+
       if @friend.blank? && @friend.response_user_id != current_user.id
         render json: {
           code: 404, message: ['Not Found Friend.']
@@ -98,7 +100,8 @@ class V1::FriendController < ApplicationController
           friend: {
             user_id: @friend.response_user_id,
             is_friend: answer ? 2 : 0,
-            is_friend_at: params[:answered_at]
+            is_friend_at: params[:answered_at],
+            user_name: response_user.name
           }
         }
         push(current_user.fcm_token, data)
