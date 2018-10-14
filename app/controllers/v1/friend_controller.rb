@@ -104,7 +104,7 @@ class V1::FriendController < ApplicationController
             user_name: response_user.name
           }
         }
-        push(current_user.fcm_token, data)
+        push(response_user.fcm_token, data)
 
         render json: {
           code: 200, message: ['Complete!']
