@@ -79,6 +79,7 @@ class V1::FriendController < ApplicationController
       }, status: 401
     else
       @friend = Friend.where(id: params[:id]).first
+      request_user = User.find(@friend.request_user_id)
       response_user = @friend.get_response_user(@friend.response_user_id)
 
       if @friend.blank? && @friend.response_user_id != current_user.id
@@ -104,7 +105,7 @@ class V1::FriendController < ApplicationController
             user_name: response_user.name
           }
         }
-        push(response_user.fcm_token, data)
+        push(request_user.fcm_token, data)
 
         render json: {
           code: 200, message: ['Complete!']
