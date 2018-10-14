@@ -4,16 +4,12 @@ class V1::FriendController < ApplicationController
 
   def index
     current_user = checkUser(request)
-    unless current_user.nil?
-      @friends = Array.new
-      Friend.get_friends(current_user.id).each do |friend|
-        find_id = friend.request_user_id != current_user.id ? friend.request_user_id : friend.response_user_id
-        @friends.push(User.find(find_id))
-      end
-    else
+    if current_user.nil?
       render json: {
-          code: 401, message: ["Unauthorized auth_token."]
+        code: 401, message: [ 'Unauthorized auth_token.' ]
       }, status: 401
+    else
+      @friends = Friend.get_friends(current_user.id)
     end
   end
 
@@ -79,8 +75,8 @@ class V1::FriendController < ApplicationController
       }, status: 401
     else
       @friend = Friend.where(id: params[:id]).first
-      request_user = User.find(@friend.request_user_id)
-      response_user = @friend.get_response_user(@friend.response_user_id)
+      request_user = Friend.request_user(@friend.id)
+      response_user = Friend.response_user(@friend.id)
 
       if @friend.blank? && @friend.response_user_id != current_user.id
         render json: {
@@ -99,7 +95,7 @@ class V1::FriendController < ApplicationController
         data = {
           type: 'friend',
           friend: {
-            user_id: @friend.response_user_id,
+            user_id: response_user.id,
             is_friend: answer ? 2 : 0,
             is_friend_at: params[:answered_at],
             user_name: response_user.name
