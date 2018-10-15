@@ -5,9 +5,8 @@ class V1::FriendController < ApplicationController
   def index
     current_user = checkUser(request)
     if current_user.nil?
-      render json: {
-        code: 401, message: [ 'Unauthorized auth_token.' ]
-      }, status: 401
+      @message = ['Unauthorized auth_token.']
+      render 'error/error', status: 401
     else
       @friends = Friend.get_friends(current_user.id)
     end
@@ -16,16 +15,15 @@ class V1::FriendController < ApplicationController
   def new
     current_user = checkUser(request)
     if current_user.nil?
-      render json: {
-        code: 401, message: ['Unauthorized auth_token.']
-      }, status: 401
+      @message = ['Unauthorized auth_token.']
+      render 'error/error', status: 401
     else
       user_ids = params[:_json]
       if user_ids.nil?
-        render json: {
-          code: 400, message: ['No have users id']
-        }, status: 400
+        @message = ['No have users id']
+        render 'error/error', status: 400
       else
+
         @friends = Array.new
         user_ids.each do |user_id|
           user = User.find(user_id)

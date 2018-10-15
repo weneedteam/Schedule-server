@@ -1,7 +1,7 @@
 class Friend < ActiveRecord::Base
 
   def self.get_friends(user_id)
-    select("users.*, friends.assent, (friends.request_user_id = #{user_id}) as request")
+    select("users.*, friends.id as friend_id, friends.assent, (friends.request_user_id = #{user_id}) as request")
         .joins("join users on users.id = IF (friends.request_user_id = #{user_id}, friends.response_user_id, friends.request_user_id)")
         .where('friends.request_user_id = ? or friends.response_user_id = ?', user_id, user_id)
 
