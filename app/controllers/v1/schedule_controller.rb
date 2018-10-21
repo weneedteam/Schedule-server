@@ -21,13 +21,13 @@ class V1::ScheduleController < ApplicationController
       @schedule = Schedule.new schedule_params.merge(user_id: current_user.id)
       @schedule.save
 
-      user_ids = params['user_ids'].nil? ? Array.new : params['user_ids']
-      if !user_ids.include? current_user.id
-        user_ids.push(current_user.id)
+      users_ids = params['users_ids'].nil? ? Array.new : params['users_ids']
+      if !users_ids.include? current_user.id
+        users_ids.push(current_user.id)
       end
 
       @schedule_users = Array.new
-      user_ids.each do |user_id|
+      users_ids.each do |user_id|
         schedule_user = ScheduleUser.new
         schedule_user.schedule_id = @schedule.id
         schedule_user.user_id = user_id
