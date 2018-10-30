@@ -8,5 +8,6 @@ json.user (@schedule.schedule_users) do |schedule_user|
     json.name schedule_user.user.name
     json.email schedule_user.user.email
     json.arrive schedule_user.arrive
+    json.arrive_at schedule_user.arrive_at.start_time.strftime('%Y-%m-%d %H:%M:%S') unless schedule_user.arrive_at.nil?
   end
 end
