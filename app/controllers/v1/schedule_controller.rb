@@ -7,7 +7,12 @@ class V1::ScheduleController < ApplicationController
     current_user = checkUser(request)
     unless current_user.nil?
       year = params[:year].to_i
-      @schedules = Schedule.between(year).where(user_id: current_user.id)
+      @schedules = ScheduleUser.joins("join schedules on schedules.id = schedule_users.schedule_id")
+                              .select("DISTINCT schedule_users.arrive as assent, schedules.*")
+                              .where('start_time BETWEEN ? AND ?', "#{year}-01-01 00:00:00", "#{year}-12-31 23:59:59")
+                              .where(user_id: current_user.id)
+                              
+      # @schedules = Schedule.between(year).where(user_id: current_user.id)
     else
       render json: {
           code: 401, message: ["Unauthorized auth_token."]
