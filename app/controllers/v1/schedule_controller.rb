@@ -76,6 +76,8 @@ class V1::ScheduleController < ApplicationController
       }, status: 406
     else
       @schedule = Schedule.where(id: params[:id]).first
+      @schedule_users = @schedule.schedule_users.where('arrived_at is not null').order('arrived_at asc')
+      @schedule_users += schedule.schedule_users.where('arrived_at is null')
       if @schedule.blank?
         render json: {
           code: 404, message: ['Not found schedule.']
